@@ -2,7 +2,7 @@ export const arrayOfObjects = [
     {
         id: 1,
         count: 1,
-        display: "Begin exercise in 15 seconds",
+        display: "Begin in 15 seconds",
         sound: "sounds/begin-in-15-seconds.mp3",
     },
     {
@@ -86,7 +86,7 @@ export const arrayOfObjects = [
     {
         id: 17,
         count: 17,
-        display: "Go",
+        display: "GO",
         sound: "sounds/go.mp3",
     },
     {
