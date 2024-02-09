@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { arrayOfObjects } from "../data";
+import { useTimetracker } from "../providers/TimeTracker.provider";
 
 const TimeTracker = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [hasStarted, setHasStarted] = useState(false); // New state to track if play has been initiated
-    const [areSoundsLoaded, setAreSoundsLoaded] = useState(false);
-    const [audioElements, setAudioElements] = useState([]);
-    const [loopCounter, setLoopCounter] = useState(() => {
-        // Attempt to retrieve the loop counter value from local storage
-        const storedLoopCounter = localStorage.getItem("loopCounter");
-
-        // If the value exists in local storage, parse it to an integer and use it; otherwise, default to 0
-        return storedLoopCounter ? parseInt(storedLoopCounter, 10) : 0;
-    });
+    const {
+        currentIndex,
+        setCurrentIndex,
+        isPlaying,
+        setIsPlaying,
+        hasStarted,
+        setHasStarted,
+        areSoundsLoaded,
+        setAreSoundsLoaded,
+        audioElements,
+        setAudioElements,
+        loopCounter,
+        setLoopCounter,
+    } = useTimetracker();
 
     const resetLoopCounter = () => {
         localStorage.removeItem("loopCounter");
