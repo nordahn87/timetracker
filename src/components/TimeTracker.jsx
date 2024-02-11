@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { arrayOfObjects } from "../data";
 import { useTimetracker } from "../providers/TimeTracker.provider";
+import ActionButton from "./ActionButton";
+import LoopCounter from "./LoopCounter";
+import { Loading } from "./Loading";
 
-const TimeTracker = () => {
+export const TimeTracker = () => {
+    const [icon, setIcon] = useState();
     const {
         currentIndex,
-        setCurrentIndex,
         isPlaying,
-        setIsPlaying,
         hasStarted,
-        setHasStarted,
         areSoundsLoaded,
         setAreSoundsLoaded,
         audioElements,
         setAudioElements,
-        loopCounter,
-        setLoopCounter,
+        buttonState,
     } = useTimetracker();
 
-    const resetLoopCounter = () => {
-        localStorage.removeItem("loopCounter");
-        setLoopCounter(0);
-    };
+    useEffect(() => {
+        arrayOfObjects.map((obj) => {
+            if (obj.type === "text") {
+                console.log("text"); // "hund" will be logged for each object that has a truthy "text" property
+            }
+            return null;
+        });
+    }, []);
 
     useEffect(() => {
         const loadedAudioElements = arrayOfObjects.map((obj) => {
@@ -51,6 +55,17 @@ const TimeTracker = () => {
     }, []);
 
     useEffect(() => {
+        if (buttonState === "Start") {
+            setIcon("fas fa-circle-play");
+        } else if (buttonState === "Pause") {
+            setIcon("fas fa-stopwatch");
+        } else if (buttonState === "Resume") {
+            setIcon("fas fa-circle-pause");
+        }
+     
+    }, [buttonState]);
+
+    useEffect(() => {
         if (isPlaying && areSoundsLoaded && currentIndex < arrayOfObjects.length) {
             const currentSound = audioElements[currentIndex];
             if (currentSound) {
@@ -59,87 +74,36 @@ const TimeTracker = () => {
         }
     }, [currentIndex, isPlaying, areSoundsLoaded, audioElements]);
 
-    useEffect(() => {
-        let timer;
-        if (isPlaying && areSoundsLoaded) {
-            timer = setInterval(() => {
-                setCurrentIndex((prevIndex) => {
-                    const nextIndex = prevIndex + 1;
-
-                    if (nextIndex >= arrayOfObjects.length) {
-                        setLoopCounter((prevCounter) => {
-                            // Increment the loop counter
-                            const newCounter = prevCounter + 1;
-
-                            // Save the new counter value to local storage
-                            localStorage.setItem("loopCounter", newCounter.toString());
-
-                            return newCounter; // Return the updated loop counter
-                        });
-
-                        return 0; // Reset the index to start from the beginning
-                    }
-
-                    return nextIndex; // Return the updated index
-                });
-            }, 1000);
-        }
-
-        // Cleanup function to clear the interval when component unmounts or dependencies change
-        return () => clearInterval(timer);
-    }, [isPlaying, areSoundsLoaded]); // Dependency array
-
-    const handlePlayPause = () => {
-        setHasStarted(true); // Set hasStarted to true once the button is clicked
-
-        setIsPlaying(!isPlaying); // Toggle the playing state
-
-        if (isPlaying) {
-            // If currently playing, play the pause sound
-            const pauseSound = new Audio(process.env.PUBLIC_URL + "/sounds/pause.mp3");
-            pauseSound.play().catch((error) => console.error("Error playing pause sound:", error));
-            console.log("I'm paused");
-        } else if (hasStarted) {
-            // If resuming from pause, play the resume sound
-            const resumeSound = new Audio(process.env.PUBLIC_URL + "/sounds/resume.mp3");
-            resumeSound.play().catch((error) => console.error("Error playing resume sound:", error));
-        }
-        // Note: No sound is played when initially starting the loop, as per the updated requirement
-    };
-
     const currentDisplay = arrayOfObjects[currentIndex]?.display;
+    const currentType = arrayOfObjects[currentIndex]?.type;
+
+    console.log(`Icon class to be applied: ${icon}`);
 
     return (
-        <div>
-            <div className="counter-container">
-                {!isPlaying && !hasStarted ? <p>Press start</p> : <p>{currentDisplay}</p>}
+        <main className="main">
+            <div className="symbol">
+                <i className={`icon-status fa-2xl ${icon}`}></i>
             </div>
 
-            {!hasStarted ? (
-                <button className="button" onClick={handlePlayPause} disabled={!areSoundsLoaded}>
-                    Start
-                </button>
-            ) : isPlaying ? (
-                <button className="button" onClick={handlePlayPause}>
-                    Pause
-                </button>
+            {!areSoundsLoaded ? (
+                <Loading />
             ) : (
-                <button className="button" onClick={handlePlayPause} disabled={!areSoundsLoaded}>
-                    Resume
-                </button>
+                <>
+                    <div className="test">
+                        <span className="counter-container">
+                            {!isPlaying && !hasStarted ? (
+                                <span className="hest">Press start</span>
+                            ) : (
+                                <span className={`hund ${currentType === "text" ? "text-style" : "he"}`}>
+                                    {currentDisplay}
+                                </span>
+                            )}
+                        </span>
+                    </div>
+                    <ActionButton />
+                    <LoopCounter />
+                </>
             )}
-
-            <div className="loop-counter-container">
-                <div>Loop Counter</div>
-                {loopCounter}
-                {loopCounter > 0 && (
-                    <button className="reset-button" onClick={resetLoopCounter}>
-                        Reset loop counter
-                    </button>
-                )}
-            </div>
-        </div>
+        </main>
     );
 };
-
-export default TimeTracker;

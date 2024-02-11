@@ -8,10 +8,9 @@ export const TimeTrackerProvider = (props) => {
     const [hasStarted, setHasStarted] = useState(false);
     const [areSoundsLoaded, setAreSoundsLoaded] = useState(false);
     const [audioElements, setAudioElements] = useState([]);
-    const [loopCounter, setLoopCounter] = useState(() => {
-        const storedLoopCounter = localStorage.getItem("loopCounter");
-        return storedLoopCounter ? parseInt(storedLoopCounter, 10) : 0;
-    });
+    const [icon, setSIcon] = useState("fa-solid fa-stopwatch");
+    const [buttonState, setButtonState] = useState("Start");
+
     return (
         <>
             <TimeTrackerContext.Provider
@@ -26,8 +25,10 @@ export const TimeTrackerProvider = (props) => {
                     setAreSoundsLoaded,
                     audioElements,
                     setAudioElements,
-                    loopCounter,
-                    setLoopCounter,
+                    icon,
+                    setSIcon,
+                    buttonState,
+                    setButtonState,
                 }}
             >
                 {props.children}
