@@ -50,7 +50,7 @@ const LoopCounter = () => {
             </div>
 
             {loopCounter > 0 && (
-                <button className="reset-button" onClick={resetLoopCounter}>
+                <button className="btn-reset" onClick={resetLoopCounter}>
                     Reset sets
                 </button>
             )}

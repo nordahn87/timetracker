@@ -1,16 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,700&display=swap");
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
 :root {
     --primary-color: #06e0ce;
     --dark-grey-color: #161616;
     --white-color: #fff;
     --black-color: #000;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -19,6 +19,14 @@ body {
     position: relative;
 }
 
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Loading screen */
 .loading-screen {
     display: flex;
     justify-content: center;
@@ -45,17 +53,9 @@ body {
     animation: rotate 2s linear infinite;
 }
 
-.test {
+.counter-wrapper {
     display: flex;
     width: 100%;
-    overflow: hidden;
-}
-
-.main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .button-container {
@@ -63,7 +63,7 @@ body {
     width: 100%;
 }
 
-.button {
+.btn {
     border: none;
     border-radius: 80px;
     padding: 10px;
@@ -96,8 +96,6 @@ body {
 .loop-count {
     font-size: 1.8rem;
     color: var(--primary-color);
- 
-  
 }
 
 .counter-container {
@@ -113,17 +111,19 @@ body {
     font-size: 13em;
 }
 
-.hund {
-    font-size: 5rem;
-    text-align: center;
+.text-align-center {
+    text-align: center !important;
 }
 
-.hest {
+.text-size {
     font-size: 6rem;
-    text-align: center;
 }
 
-.reset-button {
+.count-number-size {
+    font-size: 14rem;
+}
+
+.btn-reset {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,15 +162,7 @@ body {
     display: flex !important;
 }
 
-.text-style {
-    font-size: 6rem;
-}
-
-.he {
-    font-size: 14rem;
-}
-
-.symbol {
+.icon {
     position: absolute;
     display: flex;
     justify-content: center;

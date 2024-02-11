@@ -12,12 +12,9 @@ const ActionButton = () => {
         if (!hasStarted) {
             // Check if the timer has not started yet
             if (areSoundsLoaded) {
-                console.log("Start");
                 setHasStarted(true); // Mark as started
                 setIsPlaying(true); // Begin playing
                 setButtonState("Pause"); // Change button to show "Pause"
-            } else {
-                console.log("SOUNDS ARE NOT LOADED YET");
             }
         } else {
             handlePlayPause(); // If already started, handle play/pause
@@ -49,7 +46,7 @@ const ActionButton = () => {
 
     return (
         <div className="button-container">
-            <button className={`button ${buttonStyle}`} onClick={handleClick}>
+            <button className={`btn ${buttonStyle}`} onClick={handleClick}>
                 {buttonState}
             </button>
         </div>

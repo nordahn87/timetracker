@@ -19,15 +19,6 @@ export const TimeTracker = () => {
     } = useTimetracker();
 
     useEffect(() => {
-        arrayOfObjects.map((obj) => {
-            if (obj.type === "text") {
-                console.log("text"); // "hund" will be logged for each object that has a truthy "text" property
-            }
-            return null;
-        });
-    }, []);
-
-    useEffect(() => {
         const loadedAudioElements = arrayOfObjects.map((obj) => {
             if (obj.sound) {
                 const audio = new Audio(obj.sound);
@@ -62,7 +53,6 @@ export const TimeTracker = () => {
         } else if (buttonState === "Resume") {
             setIcon("fas fa-circle-pause");
         }
-     
     }, [buttonState]);
 
     useEffect(() => {
@@ -77,11 +67,9 @@ export const TimeTracker = () => {
     const currentDisplay = arrayOfObjects[currentIndex]?.display;
     const currentType = arrayOfObjects[currentIndex]?.type;
 
-    console.log(`Icon class to be applied: ${icon}`);
-
     return (
         <main className="main">
-            <div className="symbol">
+            <div className="icon">
                 <i className={`icon-status fa-2xl ${icon}`}></i>
             </div>
 
@@ -89,12 +77,14 @@ export const TimeTracker = () => {
                 <Loading />
             ) : (
                 <>
-                    <div className="test">
+                    <div className="counter-wrapper">
                         <span className="counter-container">
                             {!isPlaying && !hasStarted ? (
-                                <span className="hest">Press start</span>
+                                <span className="text-align-center text-size">Press start</span>
                             ) : (
-                                <span className={`hund ${currentType === "text" ? "text-style" : "he"}`}>
+                                <span
+                                    className={`text-align-center ${currentType === "text" ? "text-size" : "count-number-size"}`}
+                                >
                                     {currentDisplay}
                                 </span>
                             )}

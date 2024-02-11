@@ -3,7 +3,7 @@ export const arrayOfObjects = [
         id: 1,
         count: 1,
         type: "text",
-        display: "Begin in",
+        display: "Begin in...",
         sound: "sounds/begin-in-15-seconds.mp3",
     },
     {
@@ -87,7 +87,7 @@ export const arrayOfObjects = [
     {
         id: 17,
         count: 17,
-        display: "GO",
+        display: "GO!",
         sound: "sounds/go.mp3",
     },
     {
